@@ -9,6 +9,7 @@ const ProfInputScreen = ({ navigation }) => {
   const myContext = useContext(AppContext);
 
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [rows, setRows] = useState([["", "", "", ""]]);
 
   const handleChange = (val, x, y) => {
@@ -24,6 +25,7 @@ const ProfInputScreen = ({ navigation }) => {
   const handleSubmit = () => {
     const product = {
       name: name,
+      category: category,
       fieldValues: [...rows],
     };
     fetch(`${myContext.ipValue}/profiles/add`, {
@@ -43,12 +45,18 @@ const ProfInputScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 3 }}>
         <TextInput
           style={styles.titleInput}
           label="Wprowadź nazwę profilu/stołu"
           value={name}
           onChangeText={(text) => setName(text)}
+        />
+        <TextInput
+          style={styles.titleInput}
+          label="Wprowadź kategorię"
+          value={category}
+          onChangeText={(text) => setCategory(text)}
         />
       </View>
       <View style={{ flex: 7, marginTop: 20 }}>

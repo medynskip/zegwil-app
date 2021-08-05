@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   listWrapper: {
     flex: 7,
-    padding: 30,
+    paddingVertical: 30,
     paddingHorizontal: 20,
   },
   buttonWrapper: {

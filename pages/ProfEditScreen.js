@@ -9,6 +9,7 @@ const ProfEditScreen = ({ navigation, route }) => {
   const myContext = useContext(AppContext);
 
   const { profile } = route.params;
+  const [category, setCategory] = useState(profile.category);
   const [name, setName] = useState(profile.name);
   const [rows, setRows] = useState([...profile.fieldValues]);
 
@@ -26,6 +27,7 @@ const ProfEditScreen = ({ navigation, route }) => {
   const handleSubmit = () => {
     const product = {
       name: name,
+      category: category,
       fieldValues: [...rows],
     };
     fetch(`${myContext.ipValue}/profiles/update/${profile._id}`, {
@@ -43,15 +45,22 @@ const ProfEditScreen = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 3 }}>
         <TextInput
           style={styles.titleInput}
           label="Wprowadź nazwę profilu/stołu"
           value={name}
           onChangeText={(text) => setName(text)}
         />
+        <TextInput
+          style={styles.titleInput}
+          label="Wprowadź kategorię"
+          value={category}
+          onChangeText={(text) => setCategory(text)}
+        />
       </View>
-      <View style={{ flex: 7, marginTop: 20 }}>
+
+      <View style={{ flex: 7, marginTop: 10 }}>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 6 }}>
             <Text>Element</Text>
@@ -145,7 +154,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonWrapper: {
-    marginTop: 30,
+    marginTop: 20,
     width: "100%",
   },
 });

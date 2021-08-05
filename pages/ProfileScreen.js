@@ -29,6 +29,29 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.pillWrapper}>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 1</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 2</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 3</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 4</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 5</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 6</Text>
+        </View>
+        <View style={styles.pill}>
+          <Text style={styles.pillText}>Kategoria 7</Text>
+        </View>
+      </View>
       <View style={styles.listWrapper}>
         {existing ? (
           <ProfilesListClient navigation={navigation} profiles={profiles} />
@@ -55,6 +78,15 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 20,
   },
+  pillWrapper: { display: "flex", flexDirection: "row", padding: 20 },
+  pill: {
+    borderRadius: 30,
+    backgroundColor: "grey",
+    margin: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+  },
+  pillText: { color: "white", fontSize: 20 },
 });
 
 export default ProfileScreen;

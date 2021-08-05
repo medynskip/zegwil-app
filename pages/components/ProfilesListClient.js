@@ -43,12 +43,11 @@ const ProfilesListClient = ({ navigation, profiles }) => {
 };
 
 const styles = StyleSheet.create({
-  listWrapper: {
-    // backgroundColor: "grey",
-  },
+  listWrapper: { marginBottom: 70 },
   surface: {
     padding: 18,
     marginTop: 15,
+    margin: 15,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
