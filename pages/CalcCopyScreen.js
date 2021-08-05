@@ -1,12 +1,13 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useContext } from "react";
-
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 
-import { Button, Dialog, Portal } from "react-native-paper";
 import AppContext from "./components/AppContext";
 
-const CalculatorScreen = ({ navigation }) => {
+import { Button, Dialog, Portal } from "react-native-paper";
+
+const CalculatorCopyScreen = ({ navigation, route }) => {
+  const { originProfile } = route.params;
   const myContext = useContext(AppContext);
 
   const [visible, setVisible] = useState(false);
@@ -49,10 +50,10 @@ const CalculatorScreen = ({ navigation }) => {
     })
       .then((response) => response.json())
       .then((json) => {
+        const data = json.length > 0 ? { ...json[0] } : { ...selected };
         navigation.navigate("WprowadzanieKalk", {
-          selected: { ...selected },
-          values: json.length > 0 ? json[0] : null,
-          copied: false,
+          copied: { ...data },
+          selected: { ...originProfile },
         });
       })
       .catch((error) => {
@@ -158,6 +159,11 @@ const CalculatorScreen = ({ navigation }) => {
         mode="contained"
         style={styles.fontSize}
         onPress={handleSearch}
+        // onPress={() =>
+        //   navigation.navigate("Display", {
+        //     selected: { ...selected },
+        //   })
+        // }
       >
         Wyszukaj
       </Button>
@@ -174,7 +180,7 @@ const CalculatorScreen = ({ navigation }) => {
                   }}
                 >
                   <View style={styles.selectBlock}>
-                    <Text style={styles.fontSize}>{el}</Text>
+                    <Text style={styles.buttonText}>{el}</Text>
                   </View>
                 </TouchableHighlight>
               );
@@ -217,9 +223,16 @@ const styles = StyleSheet.create({
   },
   selectBlock: {
     margin: 10,
-    padding: 50,
-    backgroundColor: "blue",
+    padding: 30,
+    backgroundColor: "#004080",
+    borderRadius: 5,
+  },
+  buttonText: {
+    textAlign: "center",
+    padding: 20,
     color: "white",
+    fontSize: 28,
+    fontWeight: "bold",
   },
   fontSize: {
     fontSize: 28,
@@ -233,4 +246,4 @@ const styles = StyleSheet.create({
   // pickerStyle: { height: 20, width: 100, borderWidth: 1, fontSize: 24 },
 });
 
-export default CalculatorScreen;
+export default CalculatorCopyScreen;

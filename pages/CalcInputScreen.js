@@ -2,42 +2,53 @@ import { StatusBar } from "expo-status-bar";
 import React, { useEffect, useState, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import { Button } from "react-native-paper";
+import { Button, Dialog, Portal } from "react-native-paper";
 
 import AppContext from "./components/AppContext";
 import InputTable from "./components/InputTable";
 
 const CalcInputScreen = ({ navigation, route }) => {
-  const { selected, values } = route.params;
+  const { selected, values, copied } = route.params;
+
+  const [visible, setVisible] = useState(false);
+  const hideDialog = () => setVisible(false);
+  const showDialog = () => setVisible(true);
 
   const myContext = useContext(AppContext);
 
   const [existing, setExisting] = useState(false);
   const [profile, setProfile] = useState({
-    blatX: "",
-    blatY: "",
-    blatN: "",
-    wkladkaX: "",
-    wkladkaY: "",
-    wkladkaN: "",
-    podbitkaAX: "",
-    podbitkaAY: "",
-    podbitkaAN: "",
-    podbitkaBX: "",
-    podbitkaBY: "",
-    podbitkaBN: "",
-    podbitkaWX: "",
-    podbitkaWY: "",
-    podbitkaWN: "",
-    skrzyniaAX: "",
-    skrzyniaAY: "",
-    skrzyniaAN: "",
-    skrzyniaBX: "",
-    skrzyniaBY: "",
-    skrzyniaBN: "",
+    blatX: copied ? copied.blat[0] : "",
+    blatY: copied ? copied.blat[1] : "",
+    blatN: copied ? copied.blat[2] : "",
+
+    wkladkaX: copied ? copied.wkladka[0] : "",
+    wkladkaY: copied ? copied.wkladka[1] : "",
+    wkladkaN: copied ? copied.wkladka[2] : "",
+
+    podbitkaAX: copied ? copied.podbitkaA[0] : "",
+    podbitkaAY: copied ? copied.podbitkaA[1] : "",
+    podbitkaAN: copied ? copied.podbitkaA[2] : "",
+
+    podbitkaBX: copied ? copied.podbitkaB[0] : "",
+    podbitkaBY: copied ? copied.podbitkaB[1] : "",
+    podbitkaBN: copied ? copied.podbitkaB[2] : "",
+
+    podbitkaWX: copied ? copied.podbitkaW[0] : "",
+    podbitkaWY: copied ? copied.podbitkaW[1] : "",
+    podbitkaWN: copied ? copied.podbitkaW[2] : "",
+
+    skrzyniaAX: copied ? copied.skrzyniaA[0] : "",
+    skrzyniaAY: copied ? copied.skrzyniaA[1] : "",
+    skrzyniaAN: copied ? copied.skrzyniaA[2] : "",
+
+    skrzyniaBX: copied ? copied.skrzyniaB[0] : "",
+    skrzyniaBY: copied ? copied.skrzyniaB[1] : "",
+    skrzyniaBN: copied ? copied.skrzyniaB[2] : "",
   });
 
   useEffect(() => {
+    console.log("copied", copied);
     if (values) {
       setExisting(values._id);
       setProfile({
@@ -70,8 +81,38 @@ const CalcInputScreen = ({ navigation, route }) => {
         skrzyniaBY: values.skrzyniaB[1],
         skrzyniaBN: values.skrzyniaB[2],
       });
+    } else if (copied) {
+      setProfile({
+        blatX: copied.blat[0],
+        blatY: copied.blat[1],
+        blatN: copied.blat[2],
+
+        wkladkaX: copied.wkladka[0],
+        wkladkaY: copied.wkladka[1],
+        wkladkaN: copied.wkladka[2],
+
+        podbitkaAX: copied.podbitkaA[0],
+        podbitkaAY: copied.podbitkaA[1],
+        podbitkaAN: copied.podbitkaA[2],
+
+        podbitkaBX: copied.podbitkaB[0],
+        podbitkaBY: copied.podbitkaB[1],
+        podbitkaBN: copied.podbitkaB[2],
+
+        podbitkaWX: copied.podbitkaW[0],
+        podbitkaWY: copied.podbitkaW[1],
+        podbitkaWN: copied.podbitkaW[2],
+
+        skrzyniaAX: copied.skrzyniaA[0],
+        skrzyniaAY: copied.skrzyniaA[1],
+        skrzyniaAN: copied.skrzyniaA[2],
+
+        skrzyniaBX: copied.skrzyniaB[0],
+        skrzyniaBY: copied.skrzyniaB[1],
+        skrzyniaBN: copied.skrzyniaB[2],
+      });
     }
-  }, []);
+  }, [copied]);
 
   const handleChange = (val, name) => {
     setProfile({
@@ -168,6 +209,20 @@ const CalcInputScreen = ({ navigation, route }) => {
           <Text style={styles.headerLine}>Profil nogi: </Text>
           <Text style={styles.headerStrong}>{selected.noga}</Text>
         </View>
+        <Button
+          style={styles.topSpace}
+          contentStyle={styles.buttonSize}
+          labelStyle={styles.buttonFont}
+          mode="contained"
+          // disabled={!existing}
+          onPress={() => {
+            navigation.navigate("KopiowanieKalk", {
+              originProfile: { ...selected },
+            });
+          }}
+        >
+          Skopiuj wartości
+        </Button>
       </View>
       <View>
         <InputTable profile={profile} handleChange={handleChange} />
@@ -181,6 +236,7 @@ const CalcInputScreen = ({ navigation, route }) => {
           Zapisz
         </Button>
       </View>
+
       <StatusBar style="auto" />
     </View>
   );

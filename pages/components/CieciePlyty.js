@@ -1,15 +1,16 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 
 import Svg, { Rect } from "react-native-svg";
 import SvgRect from "./SvgRect";
+import SvgRectRotated from "./SvgRectRotated";
 
 const CieciePlyty = ({ profile }) => {
   const plytaX = 280; // Rozmiar plyty w skali do ekranu / 2800
-  const plytaY = 207; // Rozmiar plyty w skali do ekranu / 2070
+  const plytaY = 208; // Rozmiar plyty w skali do ekranu / 2070
 
   const elements = [];
-  let bigElements = [];
+  let leftoverElements = [];
 
   for (var key in profile) {
     if (Array.isArray(profile[key])) {
@@ -30,22 +31,25 @@ const CieciePlyty = ({ profile }) => {
 
   const newColumn = () => {
     x = x - currentWidth;
-    y = 10 - bigElements[0][1];
+    y = 10 - leftoverElements[0][1];
+    // leftoverElements.sort((a, b) => {
+    //   return b[1] - a[1];
+    // });
   };
 
   return (
-    <Svg height="100%" width="100%" viewBox="0 0 300 230">
-      <Rect
-        x="0"
-        y="10"
-        width={plytaX}
-        height={plytaY}
-        stroke="black"
-        strokeWidth="0.3"
-        fill="white"
-      />
-      {elements.map((el, i, arr) => {
-        if (el[0] <= currentWidth) {
+    <View style={styles.container}>
+      <Svg height="100%" width="70%" viewBox="0 0 300 230">
+        <Rect
+          x="0"
+          y="10"
+          width={plytaX}
+          height={plytaY}
+          stroke="black"
+          strokeWidth="0.3"
+          fill="white"
+        />
+        {elements.map((el, i, arr) => {
           if (y + el[1] < plytaY) {
             y += previousHeight;
             previousHeight = el[1];
@@ -60,70 +64,76 @@ const CieciePlyty = ({ profile }) => {
               />
             );
           } else {
-            y = 10;
-            x = x - currentWidth;
-            currentWidth = el[0];
+            leftoverElements.push(el);
+          }
+        })}
+        {newColumn()}
+        {leftoverElements.map((el, i, arr) => {
+          // el[0] - szerokosc elementu, el[1] - wysokosc elementu
+          y += previousHeight;
+          previousHeight = el[0];
+          if (y + el[0] < plytaY) {
+            currentWidth = el[1];
             return (
-              <SvgRect
+              <SvgRectRotated
                 key={i}
-                i={i}
                 x={x}
                 y={y}
-                width={el[0]}
-                height={el[1]}
+                width={el[1]}
+                height={el[0]}
+                previousHeight={previousHeight}
+              />
+            );
+          } else {
+            x = x - currentWidth;
+            y = 10;
+            currentWidth = el[1];
+            return (
+              <SvgRectRotated
+                key={i}
+                x={x}
+                y={y}
+                width={el[1]}
+                height={el[0]}
                 previousHeight={previousHeight}
               />
             );
           }
-        } else {
-          bigElements.push(el);
-          bigElements = bigElements.sort((a, b) => {
-            return b[0] - a[0];
-          });
-        }
-      })}
-      {newColumn()}
-      {bigElements.map((el, i) => {
-        if (y + el[1] < plytaY) {
-          y += previousHeight;
-          previousHeight = el[1];
+        })}
+      </Svg>
+      <View>
+        {elements.map((el, i) => {
           return (
-            <SvgRect
-              key={i}
-              x={x}
-              y={y}
-              width={el[0]}
-              height={el[1]}
-              previousHeight={previousHeight}
-            />
+            <View key={i} style={styles.listItem}>
+              <Text
+                style={styles.listText}
+              >{`${el[0]}cm x ${el[1]}cm - ${el[2]} `}</Text>
+            </View>
           );
-        } else {
-          y = 10;
-          x = x - currentWidth;
-          currentWidth = el[0];
-          return (
-            <SvgRect
-              key={i}
-              i={i}
-              x={x}
-              y={y}
-              width={el[0]}
-              height={el[1]}
-              previousHeight={previousHeight}
-            />
-          );
-        }
-      })}
-    </Svg>
+        })}
+      </View>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    display: "flex",
+    flexDirection: "row",
+    // flexWrap: "wrap",
     flex: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
+    // justifyContent: "center",
+  },
+  listItem: {
+    backgroundColor: "grey",
+    padding: 5,
+    margin: 1,
+  },
+  listText: {
+    color: "white",
+    fontSize: 16,
   },
 });
 

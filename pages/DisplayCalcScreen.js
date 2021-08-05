@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Button, Dialog, Portal } from "react-native-paper";
 
-import Svg, { Circle, Rect } from "react-native-svg";
 import CieciePlyty from "./components/CieciePlyty";
 
 import DisplayTable from "./components/DisplayTable";
@@ -81,7 +80,6 @@ const DisplayCalcScreen = ({ navigation, route }) => {
 
       <Portal>
         <Dialog visible={visible} style={{ flex: 1 }} onDismiss={hideDialog}>
-          {/* <Dialog.Title>Kalkulacja</Dialog.Title> */}
           <Dialog.Content style={{ flex: 1 }}>
             <View
               style={[
@@ -89,31 +87,18 @@ const DisplayCalcScreen = ({ navigation, route }) => {
                 { alignItems: "center", justifyContent: "center" },
               ]}
             >
-              {/* <Svg height="100%" width="100%" viewBox="0 0 100 100"> */}
               <CieciePlyty profile={{ ...selected }} />
-              {/* <Circle
-                  cx="50"
-                  cy="50"
-                  r="45"
-                  stroke="blue"
-                  strokeWidth="2.5"
-                  fill="green"
-                />
-                <Rect
-                  x="15"
-                  y="15"
-                  width="70"
-                  height="70"
-                  stroke="red"
-                  strokeWidth="2"
-                  fill="yellow"
-                /> */}
-              {/* </Svg> */}
             </View>
           </Dialog.Content>
 
           <Dialog.Actions>
-            <Button onPress={hideDialog}>Zamknij</Button>
+            <Button
+              labelStyle={styles.buttonFont}
+              mode="contained"
+              onPress={hideDialog}
+            >
+              Zamknij
+            </Button>
           </Dialog.Actions>
         </Dialog>
       </Portal>

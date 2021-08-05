@@ -21,6 +21,7 @@ import DisplayCalcScreen from "./pages/DisplayCalcScreen";
 import AdminScreen from "./pages/AdminScreen";
 import CalcProfileScreen from "./pages/CalcProfileScreen";
 import CalcInputScreen from "./pages/CalcInputScreen";
+import CalcCopyScreen from "./pages/CalcCopyScreen";
 import ProfProfileScreen from "./pages/ProfProfileScreen";
 import ProfInputScreen from "./pages/ProfInputScreen";
 import ProfEditScreen from "./pages/ProfEditScreen";
@@ -89,6 +90,7 @@ export default function App() {
             <Stack.Screen name="Administracja" component={AdminScreen} />
             <Stack.Screen name="ParametryKalk" component={CalcProfileScreen} />
             <Stack.Screen name="WprowadzanieKalk" component={CalcInputScreen} />
+            <Stack.Screen name="KopiowanieKalk" component={CalcCopyScreen} />
             <Stack.Screen
               name="ParametryProf"
               options={{ title: "Lista dostępnych profili" }}

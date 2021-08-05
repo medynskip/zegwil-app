@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import Svg, { Rect, Text, G } from "react-native-svg";
 
-const SvgRect = ({ x, y, width, height, previousHeight }) => {
+const SvgRectRotated = ({ x, y, width, height, previousHeight, i }) => {
   const [activated, setActivated] = useState(false);
   const handlePress = () => {
     console.log("click");
@@ -27,9 +27,10 @@ const SvgRect = ({ x, y, width, height, previousHeight }) => {
           fill={!activated ? "black" : "white"}
           strokeWidth="0.3"
           fontSize="6"
-          x={x - width / 2}
-          y={2 + y + previousHeight / 2}
           textAnchor="middle"
+          transform={`translate(${x - width / 1.5},${
+            y + height / 2
+          }) rotate(90)`}
           // onPress={handlePress}
         >
           {`${width}cm x ${height}cm`}
@@ -43,6 +44,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+  },
 });
 
-export default SvgRect;
+export default SvgRectRotated;
