@@ -46,12 +46,13 @@ const styles = StyleSheet.create({
   listWrapper: { marginBottom: 70 },
   surface: {
     padding: 18,
-    marginTop: 15,
-    margin: 15,
+    // marginTop: 15,
+    margin: 10,
     alignItems: "center",
     flexDirection: "row",
     justifyContent: "space-between",
-    elevation: 2,
+    elevation: 3,
+    borderRadius: 5,
   },
   scrollWrapper: {
     paddingBottom: 30,

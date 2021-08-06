@@ -6,6 +6,8 @@ import AppContext from "./components/AppContext";
 
 import { TextInput, Button } from "react-native-paper";
 
+import { showMessage, hideMessage } from "react-native-flash-message";
+
 const SetupScreen = () => {
   const [ipValue, setIpValue] = useState("");
   const myContext = useContext(AppContext);
@@ -16,6 +18,10 @@ const SetupScreen = () => {
 
   const handleSubmit = () => {
     myContext.setCurrentIp(ipValue);
+    showMessage({
+      message: "Zapisano adres serwera",
+      type: "success",
+    });
   };
 
   return (

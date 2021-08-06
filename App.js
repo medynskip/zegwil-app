@@ -11,6 +11,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 const Stack = createStackNavigator();
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import FlashMessage from "react-native-flash-message";
 
 import { Provider as PaperProvider } from "react-native-paper";
 
@@ -114,6 +115,7 @@ export default function App() {
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>
+      <FlashMessage position="top" />
     </AppContext.Provider>
   );
 }

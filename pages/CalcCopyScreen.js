@@ -3,6 +3,7 @@ import React, { useState, useContext } from "react";
 import { StyleSheet, Text, View, TouchableHighlight } from "react-native";
 
 import AppContext from "./components/AppContext";
+import { showMessage, hideMessage } from "react-native-flash-message";
 
 import { Button, Dialog, Portal } from "react-native-paper";
 
@@ -50,11 +51,22 @@ const CalculatorCopyScreen = ({ navigation, route }) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        const data = json.length > 0 ? { ...json[0] } : { ...selected };
-        navigation.navigate("WprowadzanieKalk", {
-          copied: { ...data },
-          selected: { ...originProfile },
-        });
+        if (json.length > 0) {
+          const data = { ...json[0] };
+          navigation.navigate("WprowadzanieKalk", {
+            copied: { ...data },
+            selected: { ...originProfile },
+          });
+          showMessage({
+            message: "Skopiowano",
+            type: "success",
+          });
+        } else {
+          showMessage({
+            message: "Brak profilu, spróbuj ponownie",
+            type: "danger",
+          });
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -165,7 +177,7 @@ const CalculatorCopyScreen = ({ navigation, route }) => {
         //   })
         // }
       >
-        Wyszukaj
+        Kopiuj
       </Button>
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>

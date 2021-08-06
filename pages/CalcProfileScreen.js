@@ -86,7 +86,22 @@ const CalculatorScreen = ({ navigation }) => {
             labelStyle={styles.buttonFont}
             mode="contained"
             onPress={() => {
-              handleSubmit(["80", "90", "100"], "szerokosc");
+              handleSubmit(
+                [
+                  "50",
+                  "55",
+                  "60",
+                  "65",
+                  "70",
+                  "75",
+                  "80",
+                  "85",
+                  "90",
+                  "95",
+                  "100",
+                ],
+                "szerokosc"
+              );
             }}
           >
             {selected.szerokosc}
@@ -101,7 +116,38 @@ const CalculatorScreen = ({ navigation }) => {
             labelStyle={styles.buttonFont}
             mode="contained"
             onPress={() => {
-              handleSubmit(["80", "90", "100", "140", "150", "200"], "dlugosc");
+              handleSubmit(
+                [
+                  "60",
+                  "65",
+                  "70",
+                  "75",
+                  "80",
+                  "85",
+                  "90",
+                  "95",
+                  "100",
+                  "105",
+                  "110",
+                  "115",
+                  "120",
+                  "125",
+                  "130",
+                  "140",
+                  "150",
+                  "160",
+                  "170",
+                  "180",
+                  "190",
+                  "200",
+                  "210",
+                  "220",
+                  "230",
+                  "240",
+                  "250",
+                ],
+                "dlugosc"
+              );
             }}
           >
             {selected.dlugosc}
@@ -131,7 +177,7 @@ const CalculatorScreen = ({ navigation }) => {
             labelStyle={styles.buttonFont}
             mode="contained"
             onPress={() => {
-              handleSubmit(["30", "40", "50"], "dlWkladek");
+              handleSubmit(["30", "35", "40", "50"], "dlWkladek");
             }}
           >
             {selected.dlWkladek}
@@ -146,7 +192,7 @@ const CalculatorScreen = ({ navigation }) => {
             labelStyle={styles.buttonFont}
             mode="contained"
             onPress={() => {
-              handleSubmit(["6x6", "8x8", "Diament", "Ludwik I"], "noga");
+              handleSubmit(["6x6", "8x8"], "noga");
             }}
           >
             {selected.noga}
@@ -174,7 +220,7 @@ const CalculatorScreen = ({ navigation }) => {
                   }}
                 >
                   <View style={styles.selectBlock}>
-                    <Text style={styles.fontSize}>{el}</Text>
+                    <Text style={styles.buttonText}>{el}</Text>
                   </View>
                 </TouchableHighlight>
               );
@@ -217,9 +263,16 @@ const styles = StyleSheet.create({
   },
   selectBlock: {
     margin: 10,
-    padding: 50,
-    backgroundColor: "blue",
+    padding: 20,
+    backgroundColor: "#004080",
+    borderRadius: 5,
+  },
+  buttonText: {
+    textAlign: "center",
+    padding: 20,
     color: "white",
+    fontSize: 28,
+    fontWeight: "bold",
   },
   fontSize: {
     fontSize: 28,
